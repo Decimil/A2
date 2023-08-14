@@ -1,0 +1,39 @@
+<mat-accordion>
+    <mat-expansion-panel class="expansion-container">
+        <mat-expansion-panel-header>
+            <p>Take a note</p>
+        </mat-expansion-panel-header>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div>
+                <div>
+                    <mat-form-field hintLabel="Max 15 characters and Min 3 characters" style="width: 100%;">
+                        <mat-label>Title: </mat-label>
+                        <input id='in1' matInput #input [maxlength]="15" placeholder="Ex. Note 1" matInput
+                            [(ngModel)]="title" formControlName="heading">
+                        <div *ngIf="heading.errors?.['minlength']">
+                            Title must be at least 3 characters long.
+                        </div>
+                        <mat-hint align="end">{{input.value.length}}/15</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field style="width: 100%;">
+                        <mat-label id='in2'>TextArea: </mat-label>
+                        <textarea matInput [(ngModel)]="text" formControlName="notes"> </textarea>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button color="primary" mat-raised-button type="submit" style="width: 15rem;"
+                        [disabled]="!profileForm.valid">Done</button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<div class="container">
+    <mat-card class="card-container" *ngFor="let note of noteList">
+        <mat-card-title style="padding: 1rem; text-decoration: underline;">{{note.title}}</mat-card-title>
+        <mat-card-content style="padding-left: 1rem;">{{note.text}}</mat-card-content>
+    </mat-card>
+</div>
